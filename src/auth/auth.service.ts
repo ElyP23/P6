@@ -14,13 +14,13 @@ export class AuthService {
         const user = await this.usersService.findByUsername(username);
         if (!user) return null;
         const valid = await bcrypt.compare(pass, user.password);
-        if (valid) return { id: user.id, username: user.username, role: user.role };
+        if (valid) return { id: user.id, username: user.username, nickname: user.nickname, role: user.role };
         return null;
     }    
 
 
-    async login (user: { id: number; username: string; role: string}) {
-        const payload = { sub: user.id, username: user.username, role: user.role };
+    async login (user: { id: number; username: string; nickname: string; role: string}) {
+        const payload = { sub: user.id, username: user.username, nickname: user.nickname, role: user.role };
         const accessToken = this.jwtService.sign(payload);
    
         // create refresh token using separate secret so you can revoke access by changing refresh secret
@@ -67,6 +67,7 @@ export class AuthService {
             await this.usersService.setRefreshToken( found.id, newRefresh );
             return { accessToken, refreshToken:newRefresh };
         } catch (err) {
-      } throw new UnauthorizedException ( 'Could not refresh tokens' );
+        throw new UnauthorizedException ( 'Could not refresh tokens' );
+        }
     }
 }

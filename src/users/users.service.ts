@@ -23,7 +23,7 @@ export class UsersService {
 
     async findByUsername( username: string ) {
         const [ rows ] = await this.pool().execute<RowDataPacket[]>(
-            'SELECT id, username, password, role, refresh_token FROM users WHERE username = ?',
+            'SELECT id, username, nickname, password, role, refresh_token FROM users WHERE username = ?',
             [username],
         );
     return rows[0];
@@ -87,7 +87,7 @@ async findById(id: number) {
    
     async findByRefreshToken (refreshToken: string) {
         const [rows] = await this.pool().execute<RowDataPacket[]>(
-        'SELECT id, username, role FROM users WHERE refresh_token = ?',
+        'SELECT id, username, nickname, role FROM users WHERE refresh_token = ?',
         [refreshToken],
         );
         return rows[0];
