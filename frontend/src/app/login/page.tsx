@@ -99,10 +99,11 @@ export default function login (){
                {error && (<p className="text-red-500 text-sm">{error}</p>)}
             </div>
           </div>
-
+          <div className=" pt-6">
           <Button type="submit" className="w-full bg-lime-200 text-black-500">
           Login
         </Button>
+        </div>
 
         </form>
       </CardContent>
